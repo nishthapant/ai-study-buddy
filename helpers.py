@@ -19,7 +19,7 @@ def get_queries(queries):
 
 
 # Convert list of documents to a single string
-def format_docs_to_str(docs):
+def format_docs(docs):
     return "\n\n".join([doc.page_content for doc in docs])
 
 
@@ -42,24 +42,3 @@ def get_unique_union(retrieved_docs):
     return unique_union
 
 
-def process_docs_data(file):
-    # load documents
-    try:
-        loader = PyPDFLoader(file)
-        docs = loader.load()
-        docs_formatted = format_docs_to_str(docs) 
-    except:
-        print("Loading error encountered")
-
-    #  split documents
-    try:
-        splitter = RecursiveCharacterTextSplitter.from_tiktoken_encoder(
-            chunk_size=100,
-            chunk_overlap=20,
-            is_separator_regex=False,
-        )
-
-        return splitter.create_documents([docs_formatted])
-    except:
-        print("Splitting error encountered")
-        return None
