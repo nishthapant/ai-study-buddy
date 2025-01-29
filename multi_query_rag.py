@@ -15,12 +15,12 @@ from langchain_core.output_parsers import StrOutputParser
 from langchain.prompts import ChatPromptTemplate
 from operator import itemgetter
 import templates
-from helpers import get_queries, get_unique_union, format_docs_to_str
+from helpers import get_queries, get_unique_union, format_docs
 
 
 def implement_rag(question, docs):
     # embedding and indexing
-    vectorstore = Chroma.from_documents(documents=docs, embedding=OpenAIEmbeddings())
+    vectorstore = Chroma.from_documents(documents=docs, embedding=OpenAIEmbeddings(), persist_directory="./chroma_db")
     retriever = vectorstore.as_retriever()
 
     # prompt and model setup
@@ -48,7 +48,7 @@ def implement_rag(question, docs):
     #  RAG chain to generate multiple queries and
     #  unique union of corresponding relevant docs
     context = context_chain.invoke({"question": question})
-    final_context = format_docs_to_str(context)
+    final_context = format_docs(context)
     final_prompt = ChatPromptTemplate.from_template(templates.BASIC_RAG_TEMPLATE)
 
     # RAG chain to generate the result from the context generated using the prev chain
@@ -59,5 +59,4 @@ def implement_rag(question, docs):
         | StrOutputParser()
     )
 
-    response = final_rag_chain.invoke({"question":question, "context":final_context})
-    return response
+    return final_rag_chain.stream({"question":question, "context":final_context})
