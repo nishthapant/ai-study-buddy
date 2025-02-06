@@ -8,9 +8,8 @@ os.environ['LANGSMITH_API_KEY'] = os.getenv('LANGSMITH_API_KEY')
 os.environ['LANGSMITH_PROJECT'] = os.getenv('LANGSMITH_PROJECT')
 os.environ['OPENAI_API_KEY'] = os.getenv('OPENAI_API_KEY')
 
-from langchain_community.vectorstores import Chroma
-from langchain_openai import ChatOpenAI, OpenAIEmbeddings
-from langchain_core.runnables import RunnablePassthrough
+from langchain_openai import ChatOpenAI
+# from langchain_core.runnables import RunnablePassthrough
 from langchain_core.output_parsers import StrOutputParser
 from langchain.prompts import ChatPromptTemplate
 from operator import itemgetter
@@ -18,9 +17,8 @@ import templates
 from helpers import get_queries, get_unique_union, format_docs
 
 
-def implement_rag(question, docs):
+def implement_rag(question, vectorstore):
     # embedding and indexing
-    vectorstore = Chroma.from_documents(documents=docs, embedding=OpenAIEmbeddings(), persist_directory="./chroma_db")
     retriever = vectorstore.as_retriever()
 
     # prompt and model setup

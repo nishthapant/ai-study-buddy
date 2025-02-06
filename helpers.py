@@ -7,8 +7,6 @@ os.environ['LANGSMITH_API_KEY'] = os.getenv('LANGSMITH_API_KEY')
 os.environ['LANGSMITH_PROJECT'] = os.getenv('LANGSMITH_PROJECT')
 os.environ['OPENAI_API_KEY'] = os.getenv('OPENAI_API_KEY')
 
-from langchain_community.document_loaders import PyPDFLoader
-from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.load import loads, dumps
 from langchain.schema import Document
 
