@@ -50,6 +50,20 @@ Make sure you have the following installed on your system:
     source venv/bin/activate
     ```
 
+3. Create environment variables
+	- Open your project folder.
+	- Create a new file and name it .env (without any extension).
+	- Add the following key-value pairs inside the file like this:
+        ```
+        LANGSMITH_ENDPOINT="<your-langsmith-endpoint>"
+        LANGSMITH_API_KEY="<your-langsmith-api-key>"
+        OPENAI_API_KEY="<your-openai-api-key>"
+        LANGSMITH_PROJECT="<project-name>"
+        ```
+        For a more detailed explanation visit [this page](https://docs.smith.langchain.com/observability).
+    - Add ".env" to your ```
+    .gitignore ``` file.
+    
 3. Install dependencies:
    Run the following command to install all necessary dependencies:  
    ```bash
@@ -58,36 +72,66 @@ Make sure you have the following installed on your system:
 
 ### Run the chatbot
 After installing dependencies, start the chatbot by running:
-    ```
+    ```bash
     streamlit run app.py
     ```
 The chatbot will run on ```
-localhost:8501```
+localhost:8501 ```
 
 ### How to use?
 1. When the browser window opens, you are asked to upload a pdf file.
 2. Once you have uploaded a file, you can use the text input field at the bottom to ask questions to the chatbot about the content of the file uploaded.
 
-## Use cases:
-This AI-powered study assistant has broad applications across various industries and user groups. Here are some key use cases:
+## Use Cases:
+This AI Study Assistant bridges the gap between unstructured documents and actionable insights, making it an essential tool for education, corporate learning, research, and productivity. Its scalable, adaptable architecture makes it a valuable project for AI, NLP, and software engineering roles.
 
-1. **Education and Learning**
-- Personalized Study Assistant – Students can upload textbooks, research papers, or notes and ask questions to quickly understand complex concepts.
-- Exam Preparation – Helps students summarize and review study materials efficiently, reducing time spent searching for information.
-- Tutoring Support – Acts as an AI tutor for learners who need explanations or insights from specific learning materials.
+Here are some key use cases:
 
-2. **Corporate and Workplace Learning**
-- Employee Training & Onboarding – Employees can upload company handbooks or training materials and get instant answers to work-related queries.
-- Compliance & Policy Assistance – Businesses can use it to help employees navigate company policies, HR guidelines, or legal compliance documents.
+### **Education and Learning**
+- **Personalized Study Assistant**: Students can upload textbooks, research papers, or notes and ask questions to quickly understand complex concepts.
+- **Exam Preparation**: Helps students summarize and review study materials efficiently, reducing time spent searching for information.
+- **Tutoring Support**: Acts as an AI tutor for learners who need explanations or insights from specific learning materials.
 
-3. **Legal Research**
-- Legal Document Analysis – Lawyers and legal researchers can quickly extract relevant information from contracts, case laws, and regulatory documents.
-- Academic Research – Researchers can upload scientific papers or reports and use the assistant to summarize findings and identify key points.
+### **Corporate and Workplace Learning**
+- **Employee Training & Onboarding**: Employees can upload company handbooks or training materials and get instant answers to work-related queries.
+- **Compliance & Policy Assistance**: Businesses can use it to help employees navigate company policies, HR guidelines, or legal compliance documents.
 
-4. **Business and Productivity**
-- Meeting & Report Summarization – Professionals can upload long business reports or meeting transcripts and extract key takeaways instantly.
-- Customer Support Knowledge Base – Companies can integrate the assistant with FAQs or support documentation to help customers and employees get relevant information quickly.
+### **Legal Research**
+- **Legal Document Analysis**: Lawyers and legal researchers can quickly extract relevant information from contracts, case laws, and regulatory documents.
+- **Academic Research**: Researchers can upload scientific papers or reports and use the assistant to summarize findings and identify key points.
 
-5. **Developer and AI Applications**
-- AI Chatbot for Document-Based Queries – Can be adapted as a chatbot in enterprise solutions where employees or users need to retrieve information from large document repositories.
-- RAG-Powered Search for Websites – The system can be used as an intelligent document retrieval tool for company portals or knowledge bases.
+### **Business and Productivity**
+- **Meeting & Report Summarization**: Professionals can upload long business reports or meeting transcripts and extract key takeaways instantly.
+- **Customer Support Knowledge Base**: Companies can integrate the assistant with FAQs or support documentation to help customers and employees get relevant information quickly.
+
+### **Developer and AI Applications**
+- **AI Chatbot for Document-Based Queries**: Can be adapted as a chatbot in enterprise solutions where employees or users need to retrieve information from large document repositories.
+- **RAG-Powered Search for Websites** : The system can be used as an intelligent document retrieval tool for company portals or knowledge bases.
+
+
+## Potential Improvements & Future Enhancements
+1. ### **Multi-format Support**
+    Extend support beyond PDFs to Word documents (.docx), PowerPoint (.pptx), plain text files, media like websites and images of scanned documents, etc.
+
+2. ### **Scalability & Deployment**
+    **Cloud Integration**
+    Deploy the app on AWS, GCP, or Azure for better sc lability and performance.
+
+3. ### **UI/UX & User Engagement**
+    **Voice Input & Text-to-Speech**
+    Allow users to speak their questions and hear AI-generated responses
+    **Mobile-Friendly Design**
+    Optimize the Streamlit UI for mobile users, making it more accessible.
+
+4. ### **Multi-Agent Collaboration**
+    **Auto-Generated Flashcards & Notes**
+    Create AI-generated flashcards from uploaded documents to help with study sessions.
+
+
+## Acknowledgements
+1. [Streamlit]()
+2. [ChromaDB]()
+3. [ChatOpenAI](https://python.langchain.com/docs/integrations/chat/openai/)
+4. [Langchain](https://python.langchain.com/docs/tutorials/llm_chain/)
+5. [Langsmith](https://docs.smith.langchain.com/)
+5. [Multi Query - Query Transformation](https://community.fullstackretrieval.com/query-transformation/multi-query)

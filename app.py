@@ -34,13 +34,13 @@ def load_docs(file):
                 return docs_formatted
 
     except FileNotFoundError:
-        st.error(f"File not found.")
-    except OSError as e:
-        st.error(f"OS error occurred while handling the file: {e}")
+        st.error(f"File not found. Please try again.")
+    except OSError:
+        st.error(f"OS error occurred while handling the file. Please try again.")
     except PermissionError:
-        st.error(f"Permission error: Cannot access the file.")
-    except Exception as e:
-        st.error(f"An unexpected error occurred: {e}")
+        st.error(f"Permission error: Cannot access the file. Please try again.")
+    except Exception:
+        st.error(f"An unexpected error occurred. Please try again.")
 
 
 # split documents for embedding
@@ -56,8 +56,9 @@ def split_docs(docs):
             return splitter.create_documents([docs])
         else:
             return None
-    except Exception as e:
-        st.error(f"SPLITTING - Error in splitting file: {e}")
+    except Exception:
+        st.error(f"An unexpected error occurred. Please try again.")
+
 
 
 # load and split data in uploaded file
@@ -68,7 +69,7 @@ def process_file(file):
         return processed_docs
 
     except Exception as e:
-        st.error(f"PROCESSING - Error in processing file: {e}")
+        st.error(f"Error in processing file. Please try again.")
         return None
 
 
@@ -78,10 +79,7 @@ def populate_vectorstore(docs):
         st.error("No valid text extracted from the document. Please try another file.")
         return
     try:
-        # if "vectorstore" not in st.session_state:
         st.session_state.vectorstore = None
-        
-        # if "processed_file" not in st.session_state:
         st.session_state.processed_file = False
 
         # delete the vector store
@@ -89,33 +87,28 @@ def populate_vectorstore(docs):
 
         client = chromadb.PersistentClient(path=chroma_db_path)
 
-        # List all collections
+        # list all collections
         collection_names = client.list_collections()
 
+        # delete all exisiting collections
         if collection_names:
             for name in collection_names:
-                print(f"Deleting collection: {name}")
                 client.delete_collection(name)
-
-
-        # Optional: Now create a new collection to reset the state
-        client.get_or_create_collection(name="default_collection")
-        print("✅ Created a fresh default collection.")
         
         if not os.path.exists(chroma_db_path):
             raise Exception(f"ChromaDB directory {chroma_db_path} was not created successfully.")
         
-        # create a new vector store:
-        print("Initializing ChromaDBs")
+        # create a new vector store
         st.session_state.vectorstore = Chroma.from_documents(
             documents=docs, 
             embedding=OpenAIEmbeddings(), 
             persist_directory=chroma_db_path
         )
         st.success("New document read successfully.")
+        st.session_state.processed_file = True
 
-    except Exception as e:
-        st.error(f"POPULATING VECTOR STORE - Error in populating vectorstore: {e}")
+    except Exception:
+        st.error(f"An unexpected error occurred. Please try again.")
 
 
 def app():
@@ -132,25 +125,23 @@ def app():
     if "uploaded_filename" not in st.session_state:
         st.session_state.uploaded_filename = None
     if "doc_message" not in st.session_state:
-            st.session_state.doc_message = False
+        st.session_state.doc_message = False
     if "vectorstore" not in st.session_state:
         st.session_state.vectorstore = None
-
 
     # display chat history
     for message in st.session_state.messages:
         with st.chat_message(message["role"]):
             st.write(message["content"])
-
-
+            
     # document upload widget
     with st.sidebar:
         st .write("Please upload a single PDF file.")
 
-        uploaded_file = st.file_uploader("Choose a PDF file", type=["pdf"], accept_multiple_files=False)
-
         if "uploaded_filename" not in st.session_state:
             st.session_state.uploaded_filename = None
+
+        uploaded_file = st.file_uploader("Choose a PDF file", type=["pdf"], accept_multiple_files=False)
         
         if uploaded_file is None:
             st.session_state.uploaded_filename = None
@@ -167,10 +158,10 @@ def app():
                 if docs:
                     # reset vector store when a new file is uploaded.
                     populate_vectorstore(docs)
-                    st.session_state.processed_file = True
 
             except Exception as e:
-                st.error(f"An unexpected error occurred: {e}")
+                st.error(f"An unexpected error occurred. Please try again.")
+
 
     if st.session_state.vectorstore is not None and st.session_state.processed_file:
         if not st.session_state.doc_message:
