@@ -5,6 +5,7 @@
 This is an AI-powered study assistant that helps users extract insights from uploaded PDF documents using Retrieval-Augmented Generation (RAG). The assistant enables users to upload educational materials, research papers, or notes in a PDF format and then interact with a chatbot to ask context-aware questions about the content. The chatbot optimizes response retrieval using the **Multi-Query RAG strategy**, ensuring more relevant and accurate answers.  
 
 
+<br>
 
 ## Key features:
 - **Document Understanding** – Users can upload PDFs, which are processed and converted into structured embeddings for easy retrieval.
@@ -13,6 +14,7 @@ This is an AI-powered study assistant that helps users extract insights from upl
 - **Dynamic Vector Store Management** – Implements real-time vector store updates, ensuring context-specific answers without old data interference.
 
 
+<br>
 
 ## Tech Stack
 - Backend: Python, LangChain
@@ -21,6 +23,7 @@ This is an AI-powered study assistant that helps users extract insights from upl
 - AI Model: OpenAI
 
 
+<br>
 
 ## Getting Started
 Follow the steps below to install dependencies and run the chatbot.
@@ -83,6 +86,7 @@ localhost:8501 ```
 2. Once you have uploaded a file, you can use the text input field at the bottom to ask questions to the chatbot about the content of the file uploaded.
 
 
+<br>
 
 ## Use Cases:
 This AI Study Assistant bridges the gap between unstructured documents and actionable insights, making it an essential tool for education, corporate learning, research, and productivity. Its scalable, adaptable architecture makes it a valuable project for AI, NLP, and software engineering roles.
@@ -111,6 +115,7 @@ Here are some key use cases:
 - **RAG-Powered Search for Websites** : The system can be used as an intelligent document retrieval tool for company portals or knowledge bases.
 
 
+<br>
 
 ## Potential Improvements & Future Enhancements
 1. ### **Multi-format Support**
@@ -131,6 +136,7 @@ Here are some key use cases:
     Create AI-generated flashcards from uploaded documents to help with study sessions.
 
 
+<br>
 
 ## Acknowledgements
 1. [Streamlit]()
