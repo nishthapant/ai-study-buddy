@@ -182,14 +182,21 @@ def app():
             if "vectorstore" in st.session_state and st.session_state.vectorstore is not None:
                 with st.chat_message("assistant"):
                     generator = implement_rag(prompt, st.session_state.vectorstore)
-                    st.write_stream(generator)
 
-                    # add the response to chat history
-                    if generator:
-                        response = "".join(generator)
-                    else:
-                        response = "Sorry, I could not retrieve a response."
-                    st.session_state.messages.append({"role": "assistant", "content": response })
+                    response_data = []
+
+                    def process_stream_data(data):
+                        response_data.append(data)
+                        return data
+                    
+                    # write the response to the UI
+                    st.write_stream(map(process_stream_data, generator))
+
+                    response = "".join(response_data)
+                    
+                    # add response to the chat history 
+                    st.session_state.messages.append({"role": "assistant", "content": response})
+
 
 if __name__ == "__main__":
     app()
